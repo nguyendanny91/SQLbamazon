@@ -7,17 +7,17 @@ In this repository I created an Amazon-like storefront using MySQL and Node. The
 ## Capabilities
 * The application has the following capabilities:
     1. Customer
-        ⋅⋅⋅ Able to search through catalogue of items and make purchases that will deplete the quantity
-        ⋅⋅* Logic to invalidate if quantity purchase > quantity available
+        1. Able to search through catalogue of items and make purchases that will deplete the quantity
+        2. Logic to invalidate if quantity purchase > quantity available
     2. Manager
-        a. View items
-        b. View low inventory (quantity < 5)
-        c. Add inventory quantities
-        d. Add new products
+        1. View items
+        2. View low inventory (quantity < 5)
+        3. Add inventory quantities
+        4. Add new products
         
     3. Supervisor
-        a. View product sales per department (uses CLI table to display data)
-        b. Create new departments
+        1. View product sales per department (uses CLI table to display data)
+        2. Create new departments
 
 
 ## Components
