@@ -1,9 +1,13 @@
+require("dotenv").config();
+
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var pass = require("./keys.js");
 var listofProducts = []
 var productSelect;
 var Product;
 var Quantity;
+var listofDepartments = [];
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -15,7 +19,7 @@ var connection = mysql.createConnection({
     user: "root",
   
     // Your password
-    password: "D@nny2433",
+    password: pass.dbpassword.id,
     database: "bamazon"
   });
 
@@ -143,6 +147,12 @@ function addInventory() {
 }
 
 function addProduct() {
+    connection.query("SELECT DISTINCT department_name FROM departments", function(err, res) {
+        for (var j = 0; j < res.length; j++) {
+            listofDepartments.push(res[j].department_name)
+            }
+        })
+
     inquirer
     .prompt([
         {
@@ -154,7 +164,7 @@ function addProduct() {
             name: "departmentName",
             type: "list",
             message: "What department?",
-            choices: ["Electronics","Toys","Apparel","Furniture","Food"]
+            choices: listofDepartments
         },
         {
             name: "price",
@@ -187,7 +197,8 @@ function addProduct() {
             product_name: productAdded.productName,
             department_name: productAdded.departmentName,
             price: productAdded.price,
-            stock_quantity: productAdded.quantity
+            stock_quantity: productAdded.quantity,
+            product_sales: 0
         }
         , function (error) {
             console.log(

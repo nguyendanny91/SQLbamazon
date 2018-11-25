@@ -1,10 +1,14 @@
+require("dotenv").config();
+
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var pass = require("./keys.js");
 var listofProducts = [];
 var stockQuantity;
 var Quantity;
 var Price;
 var productSelect
+
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -16,7 +20,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "D@nny2433",
+  password: pass.dbpassword.id,
   database: "bamazon"
 });
 
@@ -25,7 +29,6 @@ connection.connect(function(err) {
     console.log("connected as id " + connection.threadId);
     queryAllProducts();
 
-    // connection.end();
   });
 
 function queryAllProducts() {
@@ -89,7 +92,7 @@ function selectProducts() {
 
 function submitTransaction() {
     connection.query(
-        "UPDATE products SET stock_quantity = ? WHERE product_name = ?",[stockQuantity - productSelect.quantity, productSelect.itemList], function (error) {
+        "UPDATE products SET stock_quantity = ?, product_sales = product_sales + ? WHERE product_name = ?",[stockQuantity - productSelect.quantity,Price * Quantity, productSelect.itemList], function (error) {
             if (error) throw err;
             console.log(
                 "-----------------------------------" + "\n" +
